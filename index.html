@@ -75,9 +75,12 @@ section.block > .wrap > h2{font-size:clamp(2.2rem,4.4vw,3.2rem);margin-bottom:12
 .project li{margin-bottom:6px}
 
 .media{margin:0;position:relative;aspect-ratio:16/9;background:var(--panel);border-radius:6px;overflow:hidden}
+.media video{width:100%;height:100%;object-fit:cover;display:block}
 .media img{width:100%;height:100%;object-fit:cover}
 .media.missing img{display:none}
 .media.missing::after{content:"Add " attr(data-file);position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:14px;text-align:center;padding:16px}
+.media iframe{width:100%;height:100%;border:0;display:block}
+.dive-media{display:grid;gap:20px}
 
 /* deep dive */
 .dive{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:48px;align-items:start}
@@ -138,213 +141,228 @@ section.block > .wrap > h2{font-size:clamp(2.2rem,4.4vw,3.2rem);margin-bottom:12
 
 <main id="top">
 
-<section class="hero">
-  <div class="wrap">
-    <div>
-      <h1>Alexander Kerr</h1>
-      <p class="lede">Technical designer and Unity developer. I design game systems, then build them.</p>
-      <p class="now">Lead Programmer at Eleos Games, Technical Director at Creative Mob Studios, and currently making my own game for release in 2027.</p>
-      <div class="btns">
-        <a class="btn primary" href="#cv">Download my CV</a>
-        <a class="btn" href="mailto:alexander.william.kerr@gmail.com">Email me</a>
-      </div>
-    </div>
+    <section class="hero">
+        <div class="wrap">
+            <div>
+                <h1>Alexander Kerr</h1>
+                <p class="lede">Technical designer and Unity developer. I design game systems, then build them.</p>
+                <p class="now">Lead Programmer at Eleos Games, Technical Director at Creative Mob Studios, and currently making my own game for release in 2027.</p>
+                <div class="btns">
+                    <a class="btn primary" href="#cv">Download my CV</a>
+                    <a class="btn" href="mailto:alexander.william.kerr@gmail.com">Email me</a>
+                </div>
+            </div>
 
-    <figure class="scene">
-      <canvas id="sun-scene" role="img" aria-label="A small scene of standing stones, trees and a character whose shadows lengthen and swing as the sun moves across the sky."></canvas>
-      <div class="scene-controls">
-        <label for="time">Time of day</label>
-        <input id="time" type="range" min="0" max="1000" value="250">
-        <output id="clock" for="time">09:00</output>
-      </div>
-      <figcaption>A browser sketch of the 2D shadow system from my current project. Shadow length follows each object's height and the sun's angle. <a href="#shadows">How it works</a></figcaption>
-    </figure>
-  </div>
-</section>
+            <figure class="scene">
+                <div class="media"><video src="assets/shadows.mp4" autoplay muted loop playsinline aria-label="Shadows sweeping around objects as the sun moves through a full day"></video></div>
+                <figcaption>The 2D shadow system from my current project, running in Unity. Shadow length follows each object's height and the sun's angle. <a href="#shadows">How it works</a></figcaption>
+            </figure>
+        </div>
+    </section>
 
-<section class="block" id="work">
-  <div class="wrap">
-    <h2>What I'm working on</h2>
-    <p class="intro">Four projects running right now, across programming leadership, technical direction, contract design and my own game.</p>
+    <section class="block" id="work">
+        <div class="wrap">
+            <h2>What I'm working on</h2>
+            <p class="intro">Four projects running right now, across programming leadership, technical direction, contract design and my own game.</p>
 
-    <article class="project">
-      <figure class="media" data-file="assets/kibo.jpg"><img src="assets/kibo.jpg" alt="Kibo and the Cursed Lands gameplay" onerror="this.parentElement.classList.add('missing')"></figure>
-      <div>
-        <h3>Kibo and the Cursed Lands</h3>
-        <p class="studio">Eleos Games</p>
-        <dl class="facts">
-          <dt>Role</dt><dd>Lead Programmer</dd>
-          <dt>When</dt><dd>June 2025 to now</dd>
-          <dt>Engine</dt><dd>Unity, C#</dd>
-          <dt>Team</dt><dd>60 people, 5 programmers</dd>
-        </dl>
-        <ul>
-          <li>Lead the programming team: hiring, onboarding and mentoring junior and mid-level programmers.</li>
-          <li>Designed and built much of the combat system.</li>
-          <li>Rebuilt the enemy state machine on Unity's newer systems as a reusable framework, so enemies track the player better and new types are quicker to add.</li>
-          <li>Implemented many of the game's UI features.</li>
-        </ul>
-      </div>
-    </article>
+            <article class="project">
+                <figure class="media"><iframe src="https://www.youtube-nocookie.com/embed/AYtKAMeDHoU" title="Kibo and the Cursed Lands trailer" loading="lazy" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></figure>
+                <div>
+                    <h3>Kibo and the Cursed Lands</h3>
+                    <p class="studio">Eleos Games</p>
+                    <dl class="facts">
+                        <dt>Role</dt>
+                        <dd>Lead Programmer</dd>
+                        <dt>When</dt>
+                        <dd>June 2025 to now</dd>
+                        <dt>Engine</dt>
+                        <dd>Unity, C#</dd>
+                        <dt>Team</dt>
+                        <dd>60 people, 5 programmers</dd>
+                    </dl>
+                    <ul>
+                        <li>Lead the programming team: hiring, onboarding and mentoring junior and mid-level programmers.</li>
+                        <li>Designed and built much of the combat system.</li>
+                        <li>Rebuilt the enemy state machine on Unity's newer systems as a reusable framework, so enemies track the player better and new types are quicker to add.</li>
+                        <li>Implemented many of the game's UI features.</li>
+                    </ul>
+                </div>
+            </article>
 
-    <article class="project">
-      <figure class="media" data-file="assets/conqueror.jpg"><img src="assets/conqueror.jpg" alt="Conqueror gameplay" onerror="this.parentElement.classList.add('missing')"></figure>
-      <div>
-        <h3>Conqueror</h3>
-        <p class="studio">Creative Mob Studios</p>
-        <dl class="facts">
-          <dt>Role</dt><dd>Technical Director</dd>
-          <dt>When</dt><dd>October 2025 to now</dd>
-          <dt>Engine</dt><dd>Unreal Engine, Blueprints</dd>
-        </dl>
-        <ul>
-          <li>Joined as Lead Designer, moved into gameplay programming, and now lead both the design and programming departments.</li>
-          <li>Wrote the design documents for combat, skills and spells, enemies, levels, economy and a squad command system.</li>
-          <li>Built skills and spells in Blueprints, and help set company direction and marketing strategy with the other directors.</li>
-        </ul>
-      </div>
-    </article>
+            <article class="project">
+                <figure class="media"><iframe src="https://www.youtube-nocookie.com/embed/EMkWasXa9Mg&t=6s" title="Kibo and the Cursed Lands trailer" loading="lazy" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></figure>
+                <div>
+                    <h3>Conqueror</h3>
+                    <p class="studio">Creative Mob Studios</p>
+                    <dl class="facts">
+                        <dt>Role</dt>
+                        <dd>Technical Director</dd>
+                        <dt>When</dt>
+                        <dd>October 2025 to now</dd>
+                        <dt>Engine</dt>
+                        <dd>Unreal Engine, Blueprints</dd>
+                    </dl>
+                    <ul>
+                        <li>Joined as Lead Designer, moved into gameplay programming, and now lead both the design and programming departments.</li>
+                        <li>Wrote the design documents for combat, skills and spells, enemies, levels, economy and a squad command system.</li>
+                        <li>Built skills and spells in Blueprints, and help set company direction and marketing strategy with the other directors.</li>
+                    </ul>
+                </div>
+            </article>
 
-    <article class="project">
-      <figure class="media" data-file="assets/unannounced.jpg"><img src="assets/unannounced.jpg" alt="Teaser image from an unannounced game" onerror="this.parentElement.classList.add('missing')"></figure>
-      <div>
-        <h3>Unannounced game</h3>
-        <p class="studio">My own IP, published by Creative Mob Studios</p>
-        <dl class="facts">
-          <dt>Role</dt><dd>Creator and Lead Developer</dd>
-          <dt>When</dt><dd>2026 to now, releasing Q1 2027</dd>
-          <dt>Engine</dt><dd>Unity, C#</dd>
-          <dt>Team</dt><dd>2 to 3 people</dd>
-        </dl>
-        <ul>
-          <li>Built a technical demo and pitched it to Creative Mob Studios, who took it on for marketing and publishing.</li>
-          <li>Now in closed alpha. The custom 2D shadow system is written up <a href="#shadows">below</a>.</li>
-        </ul>
-      </div>
-    </article>
+            <article class="project">
+                <figure class="media" data-file="assets/unannounced.jpg"><img src="assets/unannounced.jpg" alt="Teaser image from an unannounced game" onerror="this.parentElement.classList.add('missing')"></figure>
+                <div>
+                    <h3>Unannounced game</h3>
+                    <p class="studio">My own IP, published by Creative Mob Studios</p>
+                    <dl class="facts">
+                        <dt>Role</dt>
+                        <dd>Creator and Lead Developer</dd>
+                        <dt>When</dt>
+                        <dd>2026 to now, releasing Q1 2027</dd>
+                        <dt>Engine</dt>
+                        <dd>Unity, C#</dd>
+                        <dt>Team</dt>
+                        <dd>2 to 3 people</dd>
+                    </dl>
+                    <ul>
+                        <li>Built a technical demo and pitched it to Creative Mob Studios, who took it on for marketing and publishing.</li>
+                        <li>Now in closed alpha. The custom 2D shadow system is written up <a href="#shadows">below</a>.</li>
+                    </ul>
+                </div>
+            </article>
 
-    <article class="project">
-      <figure class="media" data-file="assets/oil.jpg"><img src="assets/oil.jpg" alt="Oil Is Thicker Than Water prototype" onerror="this.parentElement.classList.add('missing')"></figure>
-      <div>
-        <h3>Oil Is Thicker Than Water</h3>
-        <p class="studio">Polynormal</p>
-        <dl class="facts">
-          <dt>Role</dt><dd>Contract Game Designer</dd>
-          <dt>When</dt><dd>2026</dd>
-          <dt>Genre</dt><dd>Roguelite deck-builder</dd>
-        </dl>
-        <ul>
-          <li>Turned the creative director's ideas about how the game should feel into documented, playable prototypes.</li>
-          <li>Designed the psychology framework and how it fits the card-game flow.</li>
-          <li>Designed much of the meta loop, card creation, and the ship rooms and systems.</li>
-        </ul>
-      </div>
-    </article>
-  </div>
-</section>
+            <article class="project">
+                <figure class="media" data-file="assets/unannounced.jpg"><img src="assets/unannounced.jpg" alt="Unannounced game prototype" onerror="this.parentElement.classList.add('missing')"></figure>
+                <div>
+                    <h3>Unannounced Title</h3>
+                    <p class="studio">Polynormal</p>
+                    <dl class="facts">
+                        <dt>Role</dt>
+                        <dd>Contract Game Designer</dd>
+                        <dt>When</dt>
+                        <dd>2026</dd>
+                        <dt>Genre</dt>
+                        <dd>Roguelite deck-builder</dd>
+                    </dl>
+                    <ul>
+                        <li>Turned the creative director's ideas about how the game should feel into documented, playable prototypes.</li>
+                        <li>Designed the psychology framework and how it fits the card-game flow.</li>
+                        <li>Designed much of the meta loop, card creation, and the ship rooms and systems.</li>
+                    </ul>
+                </div>
+            </article>
+        </div>
+    </section>
 
-<section class="block" id="shadows">
-  <div class="wrap">
-    <h2>2D shadows that know how tall things are</h2>
-    <p class="intro">A technical write-up of the shadow system from my current project.</p>
-    <div class="dive">
-      <div>
-        <h3>The problem</h3>
-        <p>Unity's built-in 2D shadows ignore how tall a sprite is, so shadows stretch on forever. That breaks the look of a top-down game with a day and night cycle.</p>
-        <h3>My approach</h3>
-        <p>Each object gets a darkened copy of its own sprite. The system angles and stretches that copy from the sun's position, using a fake height for the object so shadows are long at dawn and dusk and short at midday.</p>
-        <p>A central manager keeps every shadow in sync with the sun, cleans up duplicates, and updates live in the editor, so artists see the result while they place objects.</p>
-        <h3>Trade-offs</h3>
-        <p>Sprite copies are simple and look right, but they cost a draw call each. For very large scenes the next step would be moving the projection into a shader.</p>
-        <p><a class="btn" href="https://github.com/21stFret">See the code on GitHub</a></p>
-      </div>
-      <figure class="media" data-file="assets/shadows.gif"><img src="assets/shadows.gif" alt="Shadows sweeping around objects as the sun moves through a full day" onerror="this.parentElement.classList.add('missing')"></figure>
-    </div>
-  </div>
-</section>
+    <section class="block" id="earlier">
+        <div class="wrap">
+            <h2>Earlier work</h2>
+            <p class="intro">Shipped games and studio work from 2019 to 2024.</p>
+            <div class="earlier">
+                <article>
+                    <figure class="media" data-file="assets/suitup.jpg"><img src="assets/suitup.jpg" alt="Suit Up gameplay" onerror="this.parentElement.classList.add('missing')"></figure>
+                    <h3>Suit Up</h3>
+                    <p class="studio">Solo developer, self-published on Steam, 2024</p>
+                    <p>My first game on Steam. I designed and built every mechanic in Unity, made the art in Photoshop, and handled release, marketing and community.</p>
+                    <p><a href="https://store.steampowered.com/app/2924010/Suit_Up/">Play on Steam</a></p>
+                </article>
+                <article>
+                    <figure class="media" data-file="assets/fashion-league.jpg"><img src="assets/fashion-league.jpg" alt="Fashion League screens" onerror="this.parentElement.classList.add('missing')"></figure>
+                    <h3>Fashion League</h3>
+                    <p class="studio">Senior Game Designer at Fin Fin, 2023</p>
+                    <p>A mobile fashion game with a team of 20. I designed how clothing items and styles combine in a way that's logical to build but still leaves room for player choice, plus the economy, mini-games and daily loops.</p>
+                </article>
+                <article>
+                    <figure class="media" data-file="assets/bloktopia.jpg"><img src="assets/bloktopia.jpg" alt="Bloktopia VR environment" onerror="this.parentElement.classList.add('missing')"></figure>
+                    <h3>Bloktopia</h3>
+                    <p class="studio">Senior Game Designer and Product Manager, 2022 to 2023</p>
+                    <p>A VR metaverse in early development, with a team of 10. I worked on UX, environment design and VR mechanics, and wrote the specs and user journeys that turned business requirements into buildable features.</p>
+                </article>
+                <article>
+                    <figure class="media" data-file="assets/veryplay.jpg"><img src="assets/veryplay.jpg" alt="Hyper-casual game for VeryPlay Studios" onerror="this.parentElement.classList.add('missing')"></figure>
+                    <h3>Hyper-casual series</h3>
+                    <p class="studio">Lead Game Designer and Producer at VeryPlay Studios, 2021 to 2022</p>
+                    <p>Three games taken from concept to release on iOS and Android. My first time managing a team of developers and artists.</p>
+                </article>
+                <article>
+                    <figure class="media" data-file="assets/abi.jpg"><img src="assets/abi.jpg" alt="Game from ABI Studios" onerror="this.parentElement.classList.add('missing')"></figure>
+                    <h3>ABI Studios titles</h3>
+                    <p class="studio">Game Designer, 2019 to 2020</p>
+                    <p>Sole designer across puzzle, action, word and casual games. My last title there had crafting systems and skill trees I'm still proud of.</p>
+                </article>
+            </div>
+        </div>
+    </section>
 
-<section class="block" id="earlier">
-  <div class="wrap">
-    <h2>Earlier work</h2>
-    <p class="intro">Shipped games and studio work from 2019 to 2024.</p>
-    <div class="earlier">
-      <article>
-        <figure class="media" data-file="assets/suit-up.jpg"><img src="assets/suit-up.jpg" alt="Suit Up gameplay" onerror="this.parentElement.classList.add('missing')"></figure>
-        <h3>Suit Up</h3>
-        <p class="studio">Solo developer, self-published on Steam, 2024</p>
-        <p>My first game on Steam. I designed and built every mechanic in Unity, made the art in Photoshop, and handled release, marketing and community.</p>
-        <!-- TODO: replace with the real Steam store URL -->
-        <p><a href="https://store.steampowered.com/">Play on Steam</a></p>
-      </article>
-      <article>
-        <figure class="media" data-file="assets/fashion-league.jpg"><img src="assets/fashion-league.jpg" alt="Fashion League screens" onerror="this.parentElement.classList.add('missing')"></figure>
-        <h3>Fashion League</h3>
-        <p class="studio">Senior Game Designer at Fin Fin, 2023</p>
-        <p>A mobile fashion game with a team of 20. I designed how clothing items and styles combine in a way that's logical to build but still leaves room for player choice, plus the economy, mini-games and daily loops.</p>
-      </article>
-      <article>
-        <figure class="media" data-file="assets/bloktopia.jpg"><img src="assets/bloktopia.jpg" alt="Bloktopia VR environment" onerror="this.parentElement.classList.add('missing')"></figure>
-        <h3>Bloktopia</h3>
-        <p class="studio">Senior Game Designer and Product Manager, 2022 to 2023</p>
-        <p>A VR metaverse in early development, with a team of 10. I worked on UX, environment design and VR mechanics, and wrote the specs and user journeys that turned business requirements into buildable features.</p>
-      </article>
-      <article>
-        <figure class="media" data-file="assets/veryplay.jpg"><img src="assets/veryplay.jpg" alt="Hyper-casual game for VeryPlay Studios" onerror="this.parentElement.classList.add('missing')"></figure>
-        <!-- TODO: add the name of the flagship title -->
-        <h3>Hyper-casual series</h3>
-        <p class="studio">Lead Game Designer and Producer at VeryPlay Studios, 2021 to 2022</p>
-        <p>Three games taken from concept to release on iOS and Android. My first time managing a team of developers and artists.</p>
-      </article>
-      <article>
-        <figure class="media" data-file="assets/abi.jpg"><img src="assets/abi.jpg" alt="Game from ABI Studios" onerror="this.parentElement.classList.add('missing')"></figure>
-        <!-- TODO: add the name of the final ABI title -->
-        <h3>ABI Studios titles</h3>
-        <p class="studio">Game Designer, 2019 to 2020</p>
-        <p>Sole designer across puzzle, action, word and casual games. My last title there had crafting systems and skill trees I'm still proud of.</p>
-      </article>
-    </div>
-  </div>
-</section>
+    <section class="block" id="shadows">
+        <div class="wrap">
+            <h2>2D Dynamic Shadows for Unity</h2>
+            <p class="intro">A technical write-up of the shadow system from my current unnannounced project.</p>
+            <div class="dive">
+                <div>
+                    <h3>The problem</h3>
+                    <p>Unity's built-in 2D shadows ignore how tall a sprite is, so shadows stretch on forever. That breaks the look of a top-down game with a day and night cycle.</p>
+                    <h3>My approach</h3>
+                    <p><b>Basic Dynamic Shadows</b>: Each object gets a darkened copy of its own sprite. The system angles and stretches that copy from the sun's position, using a fake height for the object so shadows are long at dawn and dusk and short at midday.</p>
+                    <p><b>Mesh Dynamic Shadows</b>: Each object gets a mesh-based shadow that gets warped along the same angle of the sun. This works for low horizontal objects like the bench.</p>
+                    <p><b>Dynamic Light Casters</b>: 2D lights with the caster component attached will automattiaclly find any ShadowCasters on any given layer and create shadows accordingly.</p>
+                    <h3>Trade-offs</h3>
+                    <p>Tall cylindrycal objects like trees and people can often get away with Basic Shadows and look okay. For non symetrical objects, the mesh approach provides more accurate results.</p>
+                    <p>The issue with the Mesh is that currently it only look good for certain angles. Acute angles are problematic as shown, but working on solutions.</p>
+                    <h3>Optimisation</h3>
+                    <p>A central manager keeps every shadow in sync with the sun, cleans up duplicates, and updates live in the editor, so designers can see the result while they place objects.</p>
+                    <p>A full tint shader that can be used to customize the appearance of shadows, ensuring they blend well with the overall art style.</p>
+                    <p>Sprite copies are simple and look right, but they cost a draw call each. For very large scenes the next step would be moving the projection into a shader.</p>
+                    <p><a class="btn" href="https://github.com/21stFret">See the code on GitHub</a></p>
+                </div>
+                <div class="dive-media">
+                    <figure class="media"><video src="assets/unityrec.mp4" autoplay muted loop playsinline aria-label="Shadows sweeping around objects as the sun moves through a full day"></video></figure>
+                    <figure class="media"><video src="assets/shadows2.mp4" autoplay muted loop playsinline aria-label="DESCRIBE WHAT THIS CLIP SHOWS"></video></figure>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<section class="block" id="about">
-  <div class="wrap about">
-    <div>
-      <h2 style="font-size:clamp(2.2rem,4.4vw,3.2rem);margin-bottom:20px">About me</h2>
-      <p>I've been making games since 2019, first as a designer in Vietnam and the UK, and more recently as a programmer and technical lead. Having done both jobs, I can write a design that's realistic to build, and build a feature knowing why it exists.</p>
-      <p>Outside work I go to a lot of live music, climb, and train jiu-jitsu. Favourite games: Ori and the Blind Forest, For Honor and Tales of Vesperia.</p>
-    </div>
-    <dl class="skills">
-      <div><dt>Design</dt><dd>Combat and systems design, economy and progression, card games, level design, UX</dd></div>
-      <div><dt>Programming</dt><dd>C#, Unity, Unreal Engine Blueprints, state machines and enemy AI, UI</dd></div>
-      <div><dt>Leadership</dt><dd>Leading programming teams, hiring and mentoring, technical direction</dd></div>
-      <div><dt>Tools</dt><dd>Git, Perforce, Jira, Confluence, Notion, Miro, Photoshop, Aseprite</dd></div>
-    </dl>
-  </div>
-</section>
+    <section class="block" id="about">
+        <div class="wrap about">
+            <div>
+                <h2 style="font-size:clamp(2.2rem,4.4vw,3.2rem);margin-bottom:20px">About me</h2>
+                <p>I've been making games since 2019, first as a designer in Vietnam and the UK, and more recently as a programmer and technical lead. Having done both jobs, I can write a design that's realistic to build, and build a feature knowing why it exists.</p>
+                <p>Outside work I go to a lot of live music, climb, and train jiu-jitsu. Favourite games: Ori and the Blind Forest, For Honor and Tales of Vesperia.</p>
+            </div>
+            <dl class="skills">
+                <div><dt>Design</dt><dd>Combat and systems design, economy and progression, card games, level design, UX</dd></div>
+                <div><dt>Programming</dt><dd>C#, Unity, Unreal Engine Blueprints, state machines and enemy AI, UI</dd></div>
+                <div><dt>Leadership</dt><dd>Leading programming teams, hiring and mentoring, technical direction</dd></div>
+                <div><dt>Tools</dt><dd>Git, Perforce, Jira, Confluence, Notion, Miro, Photoshop, Aseprite</dd></div>
+            </dl>
+        </div>
+    </section>
 
-<section class="block" id="cv">
-  <div class="wrap">
-    <h2>CV</h2>
-    <p class="intro">Three versions of the same experience, each weighted for a different kind of role.</p>
-    <div class="cvs">
-      <div>
-        <h3>Technical Designer</h3>
-        <p>Leads with systems design, backed by programming.</p>
-        <a href="assets/Alexander-Kerr-CV-Technical-Designer.pdf">Download PDF</a>
-      </div>
-      <div>
-        <h3>Unity Developer</h3>
-        <p>Leads with C#, Unity and programming leadership.</p>
-        <a href="assets/Alexander-Kerr-CV-Unity-Developer.pdf">Download PDF</a>
-      </div>
-      <div>
-        <h3>Product &amp; Software</h3>
-        <p>For product and software roles outside games.</p>
-        <a href="assets/Alexander-Kerr-CV-Product-Software.pdf">Download PDF</a>
-      </div>
-    </div>
-  </div>
-</section>
+    <section class="block" id="cv">
+        <div class="wrap">
+            <h2>CV</h2>
+            <p class="intro">Three versions of the same experience, each tailored for a specific role. Each highlights my roles and responsibilities across various projects.</p>
+            <div class="cvs">
+                <div>
+                    <h3>Technical Designer</h3>
+                    <p>Leads with systems design, backed by programming.</p>
+                    <a href="assets/Alexander-Kerr-CV-Technical-Designer.pdf">Download PDF</a>
+                </div>
+                <div>
+                    <h3>Unity Developer</h3>
+                    <p>Leads with C#, Unity and programming leadership.</p>
+                    <a href="assets/Alexander-Kerr-CV-Unity-Developer.pdf">Download PDF</a>
+                </div>
+                <div>
+                    <h3>Product &amp; Software</h3>
+                    <p>For product and software roles outside games.</p>
+                    <a href="assets/Alexander-Kerr-CV-Product-Software.pdf">Download PDF</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
 </main>
 
