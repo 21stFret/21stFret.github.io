@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alexander Kerr · Technical Designer &amp; Unity Developer</title>
+<meta name="description" content="Portfolio of Alexander Kerr, technical designer and Unity developer. Combat, enemy AI, economies and card-game systems, designed and built.">
+<meta property="og:title" content="Alexander Kerr, Technical Designer &amp; Unity Developer">
+<meta property="og:description" content="Game systems, designed and built. Currently Lead Programmer at Eleos Games and Technical Director at Creative Mob Studios.">
+<meta property="og:image" content="assets/og-image.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --paper:#EEF0EC; --panel:#E2E6DF; --ink:#1D2230; --muted:#555C6B;
+  --line:#D2D7CE; --accent:#B3261E; --accent-ink:#8E1D17;
+  --display:"Barlow Condensed","Arial Narrow",sans-serif;
+  --body:"IBM Plex Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --wrap:1120px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6}
+img{max-width:100%;display:block}
+a{color:var(--accent-ink);text-underline-offset:3px}
+a:hover{color:var(--accent)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:2px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1;margin:0;letter-spacing:.2px}
+p{margin:0 0 1em}
+
+/* header */
+.site-head{position:sticky;top:0;z-index:10;background:rgba(238,240,236,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.site-head .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:60px;flex-wrap:wrap}
+.wordmark{font-family:var(--display);font-weight:700;font-size:24px;color:var(--ink);text-decoration:none}
+.site-head nav{display:flex;gap:4px 22px;flex-wrap:wrap}
+.site-head nav a{color:var(--ink);text-decoration:none;font-weight:500;font-size:15px}
+.site-head nav a:hover{color:var(--accent)}
+
+/* hero */
+.hero{padding:56px 0 72px}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:48px;align-items:center}
+.hero h1{font-size:clamp(3.4rem,8vw,6.6rem);line-height:.88;margin-bottom:24px}
+.hero .lede{font-size:1.25rem;max-width:30ch;margin-bottom:28px}
+.hero .now{color:var(--muted);font-size:15px;max-width:40ch;margin-bottom:28px}
+.btns{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-block;padding:12px 22px;border-radius:4px;font-weight:600;text-decoration:none;font-size:16px;border:2px solid var(--ink);color:var(--ink)}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{background:var(--accent-ink);border-color:var(--accent-ink);color:#fff}
+
+.scene{margin:0}
+.scene canvas{width:100%;aspect-ratio:4/3;display:block;border-radius:8px;background:#9FC3D9}
+.scene-controls{display:flex;align-items:center;gap:14px;margin-top:14px}
+.scene-controls label{font-weight:600;font-size:15px;white-space:nowrap}
+.scene-controls input{flex:1;accent-color:var(--accent)}
+.scene-controls output{font-variant-numeric:tabular-nums;font-size:15px;min-width:3.2em;text-align:right;color:var(--muted)}
+.scene figcaption{font-size:14px;color:var(--muted);margin-top:8px}
+
+/* sections */
+section.block{padding:72px 0;border-top:1px solid var(--line)}
+section.block > .wrap > h2{font-size:clamp(2.2rem,4.4vw,3.2rem);margin-bottom:12px}
+.intro{color:var(--muted);max-width:60ch;margin-bottom:40px}
+
+.project{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:40px;align-items:start;padding:36px 0}
+.project + .project{border-top:1px solid var(--line)}
+.project h3{font-size:2rem;margin-bottom:6px}
+.project .studio{color:var(--muted);margin-bottom:16px;font-weight:500}
+.facts{display:grid;grid-template-columns:max-content 1fr;gap:2px 18px;margin:0 0 18px;font-size:15px}
+.facts dt{color:var(--muted)}
+.facts dd{margin:0;font-weight:500}
+.project ul{margin:0 0 12px;padding-left:20px}
+.project li{margin-bottom:6px}
+
+.media{margin:0;position:relative;aspect-ratio:16/9;background:var(--panel);border-radius:6px;overflow:hidden}
+.media img{width:100%;height:100%;object-fit:cover}
+.media.missing img{display:none}
+.media.missing::after{content:"Add " attr(data-file);position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:14px;text-align:center;padding:16px}
+
+/* deep dive */
+.dive{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:48px;align-items:start}
+.dive h3{font-size:1.5rem;margin:28px 0 8px}
+.dive h3:first-child{margin-top:0}
+
+/* earlier work */
+.earlier{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px 48px}
+.earlier article .media{margin-bottom:16px}
+.earlier h3{font-size:1.6rem;margin-bottom:4px}
+.earlier .studio{color:var(--muted);font-weight:500;margin-bottom:10px;font-size:15px}
+
+/* about */
+.about{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:48px}
+.skills{display:grid;gap:14px;margin:0}
+.skills dt{font-weight:600}
+.skills dd{margin:0;color:var(--muted)}
+
+/* cv */
+.cvs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}
+.cvs h3{font-size:1.5rem;margin-bottom:8px}
+.cvs p{color:var(--muted);font-size:15px}
+.cvs a{font-weight:600}
+
+/* contact */
+.contact{background:var(--ink);color:var(--paper);padding:72px 0 48px}
+.contact h2{font-size:clamp(2.4rem,5vw,3.6rem);margin-bottom:16px}
+.contact p{max-width:52ch;color:#C9CED8}
+.contact .links{display:flex;flex-wrap:wrap;gap:12px 32px;margin:28px 0 48px;font-size:18px}
+.contact a{color:#fff}
+.contact a:hover{color:#F3B5AE}
+.contact small{color:#9AA1AE}
+
+@media (max-width:860px){
+  .hero .wrap,.project,.dive,.about{grid-template-columns:1fr;gap:28px}
+  .earlier,.cvs{grid-template-columns:1fr}
+  .hero{padding-top:32px}
+  .site-head{position:static}
+  html{scroll-padding-top:0}
+}
+</style>
+</head>
+<body>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="wordmark" href="#top">Alexander Kerr</a>
+    <nav aria-label="Main">
+      <a href="#work">Current work</a>
+      <a href="#shadows">Tech deep dive</a>
+      <a href="#earlier">Earlier work</a>
+      <a href="#about">About</a>
+      <a href="#cv">CV</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <h1>Alexander Kerr</h1>
+      <p class="lede">Technical designer and Unity developer. I design game systems, then build them.</p>
+      <p class="now">Lead Programmer at Eleos Games, Technical Director at Creative Mob Studios, and currently making my own game for release in 2027.</p>
+      <div class="btns">
+        <a class="btn primary" href="#cv">Download my CV</a>
+        <a class="btn" href="mailto:alexander.william.kerr@gmail.com">Email me</a>
+      </div>
+    </div>
+
+    <figure class="scene">
+      <canvas id="sun-scene" role="img" aria-label="A small scene of standing stones, trees and a character whose shadows lengthen and swing as the sun moves across the sky."></canvas>
+      <div class="scene-controls">
+        <label for="time">Time of day</label>
+        <input id="time" type="range" min="0" max="1000" value="250">
+        <output id="clock" for="time">09:00</output>
+      </div>
+      <figcaption>A browser sketch of the 2D shadow system from my current project. Shadow length follows each object's height and the sun's angle. <a href="#shadows">How it works</a></figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="block" id="work">
+  <div class="wrap">
+    <h2>What I'm working on</h2>
+    <p class="intro">Four projects running right now, across programming leadership, technical direction, contract design and my own game.</p>
+
+    <article class="project">
+      <figure class="media" data-file="assets/kibo.jpg"><img src="assets/kibo.jpg" alt="Kibo and the Cursed Lands gameplay" onerror="this.parentElement.classList.add('missing')"></figure>
+      <div>
+        <h3>Kibo and the Cursed Lands</h3>
+        <p class="studio">Eleos Games</p>
+        <dl class="facts">
+          <dt>Role</dt><dd>Lead Programmer</dd>
+          <dt>When</dt><dd>June 2025 to now</dd>
+          <dt>Engine</dt><dd>Unity, C#</dd>
+          <dt>Team</dt><dd>60 people, 5 programmers</dd>
+        </dl>
+        <ul>
+          <li>Lead the programming team: hiring, onboarding and mentoring junior and mid-level programmers.</li>
+          <li>Designed and built much of the combat system.</li>
+          <li>Rebuilt the enemy state machine on Unity's newer systems as a reusable framework, so enemies track the player better and new types are quicker to add.</li>
+          <li>Implemented many of the game's UI features.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="project">
+      <figure class="media" data-file="assets/conqueror.jpg"><img src="assets/conqueror.jpg" alt="Conqueror gameplay" onerror="this.parentElement.classList.add('missing')"></figure>
+      <div>
+        <h3>Conqueror</h3>
+        <p class="studio">Creative Mob Studios</p>
+        <dl class="facts">
+          <dt>Role</dt><dd>Technical Director</dd>
+          <dt>When</dt><dd>October 2025 to now</dd>
+          <dt>Engine</dt><dd>Unreal Engine, Blueprints</dd>
+        </dl>
+        <ul>
+          <li>Joined as Lead Designer, moved into gameplay programming, and now lead both the design and programming departments.</li>
+          <li>Wrote the design documents for combat, skills and spells, enemies, levels, economy and a squad command system.</li>
+          <li>Built skills and spells in Blueprints, and help set company direction and marketing strategy with the other directors.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="project">
+      <figure class="media" data-file="assets/unannounced.jpg"><img src="assets/unannounced.jpg" alt="Teaser image from an unannounced game" onerror="this.parentElement.classList.add('missing')"></figure>
+      <div>
+        <h3>Unannounced game</h3>
+        <p class="studio">My own IP, published by Creative Mob Studios</p>
+        <dl class="facts">
+          <dt>Role</dt><dd>Creator and Lead Developer</dd>
+          <dt>When</dt><dd>2026 to now, releasing Q1 2027</dd>
+          <dt>Engine</dt><dd>Unity, C#</dd>
+          <dt>Team</dt><dd>2 to 3 people</dd>
+        </dl>
+        <ul>
+          <li>Built a technical demo and pitched it to Creative Mob Studios, who took it on for marketing and publishing.</li>
+          <li>Now in closed alpha. The custom 2D shadow system is written up <a href="#shadows">below</a>.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="project">
+      <figure class="media" data-file="assets/oil.jpg"><img src="assets/oil.jpg" alt="Oil Is Thicker Than Water prototype" onerror="this.parentElement.classList.add('missing')"></figure>
+      <div>
+        <h3>Oil Is Thicker Than Water</h3>
+        <p class="studio">Polynormal</p>
+        <dl class="facts">
+          <dt>Role</dt><dd>Contract Game Designer</dd>
+          <dt>When</dt><dd>2026</dd>
+          <dt>Genre</dt><dd>Roguelite deck-builder</dd>
+        </dl>
+        <ul>
+          <li>Turned the creative director's ideas about how the game should feel into documented, playable prototypes.</li>
+          <li>Designed the psychology framework and how it fits the card-game flow.</li>
+          <li>Designed much of the meta loop, card creation, and the ship rooms and systems.</li>
+        </ul>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="block" id="shadows">
+  <div class="wrap">
+    <h2>2D shadows that know how tall things are</h2>
+    <p class="intro">A technical write-up of the shadow system from my current project.</p>
+    <div class="dive">
+      <div>
+        <h3>The problem</h3>
+        <p>Unity's built-in 2D shadows ignore how tall a sprite is, so shadows stretch on forever. That breaks the look of a top-down game with a day and night cycle.</p>
+        <h3>My approach</h3>
+        <p>Each object gets a darkened copy of its own sprite. The system angles and stretches that copy from the sun's position, using a fake height for the object so shadows are long at dawn and dusk and short at midday.</p>
+        <p>A central manager keeps every shadow in sync with the sun, cleans up duplicates, and updates live in the editor, so artists see the result while they place objects.</p>
+        <h3>Trade-offs</h3>
+        <p>Sprite copies are simple and look right, but they cost a draw call each. For very large scenes the next step would be moving the projection into a shader.</p>
+        <p><a class="btn" href="https://github.com/21stFret">See the code on GitHub</a></p>
+      </div>
+      <figure class="media" data-file="assets/shadows.gif"><img src="assets/shadows.gif" alt="Shadows sweeping around objects as the sun moves through a full day" onerror="this.parentElement.classList.add('missing')"></figure>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="earlier">
+  <div class="wrap">
+    <h2>Earlier work</h2>
+    <p class="intro">Shipped games and studio work from 2019 to 2024.</p>
+    <div class="earlier">
+      <article>
+        <figure class="media" data-file="assets/suit-up.jpg"><img src="assets/suit-up.jpg" alt="Suit Up gameplay" onerror="this.parentElement.classList.add('missing')"></figure>
+        <h3>Suit Up</h3>
+        <p class="studio">Solo developer, self-published on Steam, 2024</p>
+        <p>My first game on Steam. I designed and built every mechanic in Unity, made the art in Photoshop, and handled release, marketing and community.</p>
+        <!-- TODO: replace with the real Steam store URL -->
+        <p><a href="https://store.steampowered.com/">Play on Steam</a></p>
+      </article>
+      <article>
+        <figure class="media" data-file="assets/fashion-league.jpg"><img src="assets/fashion-league.jpg" alt="Fashion League screens" onerror="this.parentElement.classList.add('missing')"></figure>
+        <h3>Fashion League</h3>
+        <p class="studio">Senior Game Designer at Fin Fin, 2023</p>
+        <p>A mobile fashion game with a team of 20. I designed how clothing items and styles combine in a way that's logical to build but still leaves room for player choice, plus the economy, mini-games and daily loops.</p>
+      </article>
+      <article>
+        <figure class="media" data-file="assets/bloktopia.jpg"><img src="assets/bloktopia.jpg" alt="Bloktopia VR environment" onerror="this.parentElement.classList.add('missing')"></figure>
+        <h3>Bloktopia</h3>
+        <p class="studio">Senior Game Designer and Product Manager, 2022 to 2023</p>
+        <p>A VR metaverse in early development, with a team of 10. I worked on UX, environment design and VR mechanics, and wrote the specs and user journeys that turned business requirements into buildable features.</p>
+      </article>
+      <article>
+        <figure class="media" data-file="assets/veryplay.jpg"><img src="assets/veryplay.jpg" alt="Hyper-casual game for VeryPlay Studios" onerror="this.parentElement.classList.add('missing')"></figure>
+        <!-- TODO: add the name of the flagship title -->
+        <h3>Hyper-casual series</h3>
+        <p class="studio">Lead Game Designer and Producer at VeryPlay Studios, 2021 to 2022</p>
+        <p>Three games taken from concept to release on iOS and Android. My first time managing a team of developers and artists.</p>
+      </article>
+      <article>
+        <figure class="media" data-file="assets/abi.jpg"><img src="assets/abi.jpg" alt="Game from ABI Studios" onerror="this.parentElement.classList.add('missing')"></figure>
+        <!-- TODO: add the name of the final ABI title -->
+        <h3>ABI Studios titles</h3>
+        <p class="studio">Game Designer, 2019 to 2020</p>
+        <p>Sole designer across puzzle, action, word and casual games. My last title there had crafting systems and skill trees I'm still proud of.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="about">
+  <div class="wrap about">
+    <div>
+      <h2 style="font-size:clamp(2.2rem,4.4vw,3.2rem);margin-bottom:20px">About me</h2>
+      <p>I've been making games since 2019, first as a designer in Vietnam and the UK, and more recently as a programmer and technical lead. Having done both jobs, I can write a design that's realistic to build, and build a feature knowing why it exists.</p>
+      <p>Outside work I go to a lot of live music, climb, and train jiu-jitsu. Favourite games: Ori and the Blind Forest, For Honor and Tales of Vesperia.</p>
+    </div>
+    <dl class="skills">
+      <div><dt>Design</dt><dd>Combat and systems design, economy and progression, card games, level design, UX</dd></div>
+      <div><dt>Programming</dt><dd>C#, Unity, Unreal Engine Blueprints, state machines and enemy AI, UI</dd></div>
+      <div><dt>Leadership</dt><dd>Leading programming teams, hiring and mentoring, technical direction</dd></div>
+      <div><dt>Tools</dt><dd>Git, Perforce, Jira, Confluence, Notion, Miro, Photoshop, Aseprite</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="block" id="cv">
+  <div class="wrap">
+    <h2>CV</h2>
+    <p class="intro">Three versions of the same experience, each weighted for a different kind of role.</p>
+    <div class="cvs">
+      <div>
+        <h3>Technical Designer</h3>
+        <p>Leads with systems design, backed by programming.</p>
+        <a href="assets/Alexander-Kerr-CV-Technical-Designer.pdf">Download PDF</a>
+      </div>
+      <div>
+        <h3>Unity Developer</h3>
+        <p>Leads with C#, Unity and programming leadership.</p>
+        <a href="assets/Alexander-Kerr-CV-Unity-Developer.pdf">Download PDF</a>
+      </div>
+      <div>
+        <h3>Product &amp; Software</h3>
+        <p>For product and software roles outside games.</p>
+        <a href="assets/Alexander-Kerr-CV-Product-Software.pdf">Download PDF</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="contact" id="contact">
+  <div class="wrap">
+    <h2>Let's talk</h2>
+    <p>I'm open to full-time and contract roles in design, programming or technical leadership, remote or UK-based.</p>
+    <div class="links">
+      <a href="mailto:alexander.william.kerr@gmail.com">alexander.william.kerr@gmail.com</a>
+      <a href="https://www.linkedin.com/in/alexander-kerr-b458a2b9/">LinkedIn</a>
+      <a href="https://github.com/21stFret">GitHub</a>
+    </div>
+    <small>© 2026 Alexander Kerr</small>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const canvas = document.getElementById('sun-scene');
+  const ctx = canvas.getContext('2d');
+  const shadowCanvas = document.createElement('canvas');
+  const sctx = shadowCanvas.getContext('2d');
+  const slider = document.getElementById('time');
+  const clock = document.getElementById('clock');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let W = 0, H = 0, dpr = 1;
+  let t = slider.value / 1000;      // 0 = sunrise, 1 = sunset
+  let autoPlay = !reduceMotion;
+  let dir = 1;
+
+  // Scene objects. x, y = base position as a fraction of width/height.
+  const objects = [
+    { x: .15, y: .70, type: 'stone', w: .07, h: .27 },
+    { x: .35, y: .86, type: 'tree',  s: 1 },
+    { x: .52, y: .66, type: 'stone', w: .05, h: .16 },
+    { x: .66, y: .81, type: 'hero' },
+    { x: .83, y: .69, type: 'tree',  s: .72 },
+    { x: .92, y: .90, type: 'stone', w: .04, h: .09 }
+  ];
+
+  const circle = (cx, cy, r, n = 20) => {
+    const pts = [];
+    for (let i = 0; i < n; i++) {
+      const a = (i / n) * Math.PI * 2;
+      pts.push([cx + Math.cos(a) * r, cy + Math.sin(a) * r]);
+    }
+    return pts;
+  };
+
+  // Each part: points in "height units" (x across, y up from the base), plus a colour.
+  function parts(o) {
+    if (o.type === 'stone') {
+      const { w, h } = o;
+      return [{ c: '#6B7080', p: [[-w/2,0],[w/2,0],[w*.38,h],[-w*.32,h*.94]] }];
+    }
+    if (o.type === 'tree') {
+      const s = o.s, tw = .026*s, th = .13*s, r = .09*s;
+      return [
+        { c: '#6B4F3A', p: [[-tw/2,0],[tw/2,0],[tw/2,th],[-tw/2,th]] },
+        { c: '#4E6B4A', p: circle(0, th + r*.75, r) }
+      ];
+    }
+    return [
+      { c: '#B3261E', p: [[-.018,0],[.018,0],[.021,.07],[-.021,.07]] },
+      { c: '#E6C7A6', p: circle(0, .092, .02, 14) }
+    ];
+  }
+
+  const mix = (a, b, k) => a + (b - a) * k;
+  const mixHex = (h1, h2, k) => {
+    const p = h => [1,3,5].map(i => parseInt(h.slice(i, i+2), 16));
+    const a = p(h1), b = p(h2);
+    return `rgb(${a.map((v, i) => Math.round(mix(v, b[i], k))).join(',')})`;
+  };
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = canvas.clientWidth; H = canvas.clientHeight;
+    canvas.width = shadowCanvas.width = Math.round(W * dpr);
+    canvas.height = shadowCanvas.height = Math.round(H * dpr);
+    draw();
+  }
+
+  function draw() {
+    if (!W) return;
+    const a = t * Math.PI;                        // sun angle across the sky
+    const elevDeg = Math.sin(a) * 68;             // sun height in degrees
+    const noon = Math.max(0, elevDeg / 68);       // 0 at horizon, 1 at midday
+    const len = Math.min(3.2, 1 / Math.tan(Math.max(elevDeg, 4) * Math.PI / 180));
+    const kx = Math.cos(a) * len;                 // shadow falls away from the sun
+    const ky = .42 * len;                          // and back along the ground
+    const horizon = H * .56;
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    // Sky
+    const sky = ctx.createLinearGradient(0, 0, 0, horizon);
+    sky.addColorStop(0, mixHex('#4B5B7A', '#8DB8D4', noon));
+    sky.addColorStop(1, mixHex('#F0B27A', '#DCE9EE', noon));
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, W, horizon);
+
+    // Sun
+    const sunX = W/2 - Math.cos(a) * W * .42;
+    const sunY = horizon - Math.sin(a) * horizon * .8;
+    ctx.fillStyle = mixHex('#F28C38', '#FFE7A3', noon);
+    ctx.beginPath(); ctx.arc(sunX, sunY, H * .045, 0, Math.PI * 2); ctx.fill();
+
+    // Ground
+    ctx.fillStyle = mixHex('#A7A48A', '#C8CFB6', noon);
+    ctx.fillRect(0, horizon, W, H - horizon);
+
+    // Shadows: draw solid on a separate layer, then composite once so overlaps don't double-darken
+    sctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    sctx.clearRect(0, 0, W, H);
+    sctx.fillStyle = '#2B3A55';
+    const U = H;                                  // height units to pixels
+    for (const o of objects) {
+      const bx = o.x * W, by = o.y * H;
+      for (const part of parts(o)) {
+        sctx.beginPath();
+        part.p.forEach(([px, py], i) => {
+          const x = bx + (px + py * kx) * U;
+          const y = by - py * ky * U;
+          i ? sctx.lineTo(x, y) : sctx.moveTo(x, y);
+        });
+        sctx.closePath(); sctx.fill();
+      }
+    }
+    const fade = Math.min(1, elevDeg / 10);
+    ctx.save();
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.globalAlpha = .38 * Math.max(0, fade);
+    ctx.drawImage(shadowCanvas, 0, 0);
+    ctx.restore();
+
+    // Objects, back to front
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    [...objects].sort((p, q) => p.y - q.y).forEach(o => {
+      const bx = o.x * W, by = o.y * H;
+      for (const part of parts(o)) {
+        ctx.fillStyle = part.c;
+        ctx.beginPath();
+        part.p.forEach(([px, py], i) => {
+          const x = bx + px * U, y = by - py * U;
+          i ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+        });
+        ctx.closePath(); ctx.fill();
+      }
+    });
+
+    const mins = Math.round((6 + t * 12) * 60);
+    clock.textContent = `${String(Math.floor(mins / 60)).padStart(2, '0')}:${String(mins % 60).padStart(2, '0')}`;
+  }
+
+  slider.addEventListener('input', () => {
+    autoPlay = false;
+    t = slider.value / 1000;
+    draw();
+  });
+
+  let last = 0, visible = true;
+  new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(canvas);
+  function loop(now) {
+    const dt = Math.min(50, now - (last || now)); last = now;
+    if (autoPlay && visible) {
+      t += dir * dt / 16000;
+      if (t > .97) { t = .97; dir = -1; }
+      if (t < .03) { t = .03; dir = 1; }
+      slider.value = Math.round(t * 1000);
+      draw();
+    }
+    requestAnimationFrame(loop);
+  }
+
+  new ResizeObserver(resize).observe(canvas);
+  resize();
+  if (!reduceMotion) requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
